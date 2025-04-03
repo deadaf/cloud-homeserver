@@ -74,70 +74,6 @@ services:
       AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /config/secrets/JWT_SECRET
       AUTHELIA_SESSION_SECRET_FILE: /config/secrets/SESSION_SECRET
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /config/secrets/STORAGE_ENCRYPTION_KEY
-
-  sonarr:
-    container_name: sonarr
-    image: linuxserver/sonarr:latest
-    restart: unless-stopped
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.sonarr.rule=Host(`sonarr.${MY_DOMAIN}`)'
-      - 'traefik.http.routers.sonarr.entryPoints=websecure'
-      - 'traefik.http.routers.sonarr.middlewares=authelia@docker'
-    environment:
-      TZ: Asia/Kolkata
-    volumes:
-      - ../data/sonarr:/config
-      - /mnt/media/TV:/tv
-      - /mnt/media/Downloads:/downloads
-
-  radarr:
-    container_name: radarr
-    image: linuxserver/radarr:latest
-    restart: unless-stopped
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.radarr.rule=Host(`radarr.${MY_DOMAIN}`)'
-      - 'traefik.http.routers.radarr.entryPoints=websecure'
-      - 'traefik.http.routers.radarr.middlewares=authelia@docker'
-    environment:
-      TZ: Asia/Kolkata
-    volumes:
-      - ../data/radarr:/config
-      - /mnt/media/Movies:/movies
-      - /mnt/media/Downloads:/downloads
-
-  deluge:
-    container_name: deluge
-    image: linuxserver/deluge:latest
-    restart: unless-stopped
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.deluge.rule=Host(`deluge.${MY_DOMAIN}`)'
-      - 'traefik.http.routers.deluge.entryPoints=websecure'
-      - 'traefik.http.routers.deluge.middlewares=authelia@docker'
-    environment:
-      TZ: Asia/Kolkata
-    volumes:
-      - ../data/deluge:/config
-      - /mnt/media/Downloads:/downloads
-  
-  jackett:
-    container_name: jackett
-    image: linuxserver/jackett:latest
-    restart: unless-stopped
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.jackett.rule=Host(`jackett.${MY_DOMAIN}`)'
-      - 'traefik.http.routers.jackett.entryPoints=websecure'
-      - 'traefik.http.routers.jackett.middlewares=authelia@docker'
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Kolkata
-      - AUTO_UPDATE=true
-    volumes:
-      - ../data/jackett:/config
       
   jellyfin:
     container_name: jellyfin
@@ -149,6 +85,8 @@ services:
       - 'traefik.http.routers.jellyfin.entryPoints=websecure'
     environment:
       TZ: Asia/Kolkata
+    ports:
+      - "8096:8096"
     volumes:
       - ../data/jellyfin:/config
       - /mnt/media/Movies:/movies
