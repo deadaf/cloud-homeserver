@@ -68,7 +68,7 @@ services:
     expose: 
       - 9091
     environment:
-      TZ: Europe/Amsterdam
+      TZ: Asia/Kolkata
       X_AUTHELIA_CONFIG_FILTERS: template
       MY_DOMAIN: ${MY_DOMAIN}
       AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /config/secrets/JWT_SECRET
@@ -85,7 +85,7 @@ services:
       - 'traefik.http.routers.sonarr.entryPoints=websecure'
       - 'traefik.http.routers.sonarr.middlewares=authelia@docker'
     environment:
-      TZ: Europe/Amsterdam
+      TZ: Asia/Kolkata
     volumes:
       - ../data/sonarr:/config
       - /mnt/media/TV:/tv
@@ -101,7 +101,7 @@ services:
       - 'traefik.http.routers.radarr.entryPoints=websecure'
       - 'traefik.http.routers.radarr.middlewares=authelia@docker'
     environment:
-      TZ: Europe/Amsterdam
+      TZ: Asia/Kolkata
     volumes:
       - ../data/radarr:/config
       - /mnt/media/Movies:/movies
@@ -117,7 +117,7 @@ services:
       - 'traefik.http.routers.deluge.entryPoints=websecure'
       - 'traefik.http.routers.deluge.middlewares=authelia@docker'
     environment:
-      TZ: Europe/Amsterdam
+      TZ: Asia/Kolkata
     volumes:
       - ../data/deluge:/config
       - /mnt/media/Downloads:/downloads
@@ -131,7 +131,7 @@ services:
       - 'traefik.http.routers.jellyfin.rule=Host(`jellyfin.${MY_DOMAIN}`)'
       - 'traefik.http.routers.jellyfin.entryPoints=websecure'
     environment:
-      TZ: Europe/Amsterdam
+      TZ: Asia/Kolkata
     volumes:
       - ../data/jellyfin:/config
       - /mnt/media/Movies:/movies
